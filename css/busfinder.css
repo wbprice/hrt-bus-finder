@@ -408,6 +408,16 @@ h1, h2, h3, h4, h5, p, a {
 	div.head-label.row-fluid {
 		height: 25px;
 	}
+
+	.navbar .brand {
+		margin-left: -20px;
+	}
+}
+
+@media (min-width:979px) {
+	.navbar .brand {
+		margin-left: -40px;
+	}
 }
 
 /************************
