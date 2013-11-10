@@ -487,28 +487,30 @@ map canvas
 Modal Disclaimer
 *********************/
 
-#disclaimer {
+.modal {
 	border-radius: 0px;
+	z-index: 9999;
+	position: relative;
 }
 
-#disclaimer h3 {
+.modal h3 {
 	color: white;
 	text-align: center;
 	font-weight: 300;
 }
 
-#disclaimer p {
+.modal p {
 	font-size: 12px;
 	line-height: 1.1em;
 	padding: 0;
 }
 
-#disclaimer .modal-header {
+.modal .modal-header {
 	background: #A7BFCC;
 	padding: 0 !important;
 }
 
-#disclaimer .modal-header h3 {
+.modal .modal-header h3 {
 	line-height: 30px;
 	font-size: 14px;
 	text-transform: uppercase;
@@ -517,17 +519,17 @@ Modal Disclaimer
 	font-style: italic;
 }
 
-#disclaimer .modal-body {
+.modal .modal-body {
 	padding: 6px;
 }
 
-#disclaimer .modal-footer {
+.modal .modal-footer {
 	background: #EEDFCC;
 	border-top: none;
 	padding: .5em;	
 }
 
-#disclaimer .modal-footer .btn {
+.modal .modal-footer .btn {
 	background: #DB5051;
 	border-radius: 2px;
 	border: 2px solid white;

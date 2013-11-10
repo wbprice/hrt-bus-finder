@@ -483,7 +483,7 @@ $(function(){
 	    
 	    var onFail = function() {
 	        onLocated(DowntownNorfolk);
-	        $('#geolocation-failure').toggle();
+	        $('#geolocation-failure').modal('show');
 	    };
 	    
 	    var timeout = setTimeout(onFail, 5000);
