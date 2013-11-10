@@ -141,7 +141,7 @@ $(function(){
                 noStopsDiv.addClass('no-arrivals');
                 this.$('.arrivals').html(noStopsDiv);
 			}
-		},
+		}, 	 	 	
 		
 		checkOrder: function() {
 		    var dom = this.$('.arrivals .table .schedule');
@@ -483,6 +483,7 @@ $(function(){
 	    
 	    var onFail = function() {
 	        onLocated(DowntownNorfolk);
+	        alert("Geolocation failed.  Please reload and try again.");
 	    };
 	    
 	    var timeout = setTimeout(onFail, 5000);
