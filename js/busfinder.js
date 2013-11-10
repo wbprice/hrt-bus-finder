@@ -483,7 +483,7 @@ $(function(){
 	    
 	    var onFail = function() {
 	        onLocated(DowntownNorfolk);
-	        alert("Geolocation failed.  Please reload and try again.");
+	        $('#geolocation-failure').toggle();
 	    };
 	    
 	    var timeout = setTimeout(onFail, 5000);
