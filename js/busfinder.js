@@ -301,7 +301,7 @@ $(function(){
 			else msg += timePassed + ' minutes ago.';
 
 			return msg;
-	    },
+	    },on
 	    
 	    moveMarker: function(oldMarker, newMarker) {
 	        var frames = 50;
@@ -416,7 +416,7 @@ $(function(){
 		render: function() {
 		    var mapShowing = this.$('.mapcanvas').is(':visible');
 		    var minutesToArrival = this.model.minutesFromNow();
-		    
+		    on
 			this.$el.html(this.template({
 				routeId: this.model.get('route_id'),
 				destination: this.model.get('destination'),

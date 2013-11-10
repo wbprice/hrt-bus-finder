@@ -71,7 +71,7 @@
         		</div>
         		<div class="modal-footer">
         			<a href="#/routes/" class="btn" data-dismiss="modal">Route Finder</a>
-        			<a href="#/findStops" class="btn" data-dismiss="modal">Stop Finder</a>
+        			<a href="#/findStops/" class="btn" data-dismiss="modal">Stop Finder</a>
         		</div>
         	</div>
         </div>
@@ -210,12 +210,14 @@
             }
         }); 
 
-        $('#disclaimer a').click(function() {
-           $("#disclaimer").modal('hide');
+        $('.modal').click("a", function() {
+           $(".modal").modal('hide');
             if(supports_html5_storage()) {
                 localStorage['disclaimer_accepted'] = 'true';
             }
         });
+
+
 	</script>
 </body>
 </html>
