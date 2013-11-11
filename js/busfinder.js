@@ -106,7 +106,6 @@ $(function(){
 			$('#loading').remove();
 			this.collection.each(this.addStop, this);
 			this.$el.append("<button class='loadMore'>Refresh</button>");
-			this.$el.find('.loadMore').click(this.model.updateArrivalList);
 		},
 		
 		addStop: function(stop) {
@@ -124,6 +123,7 @@ $(function(){
 			this.collection.on('add', this.addArrival, this);
 			this.collection.on('sort', this.checkOrder, this);
 			this.collection.on('sync', this.checkForEmpty, this);
+			$('.loadMore').on('click', this.updateArrivalList, this);
 
 			this.updateArrivalList();
 			App.Intervals.push(setInterval($.proxy(this.updateArrivalList, this), 60000));
@@ -131,6 +131,7 @@ $(function(){
 		
 		updateArrivalList: function() {
 			this.collection.fetch({dataType: 'jsonp'});
+			console.log('updateArrivalList called.')
 		},
 		
 		render: function() {
