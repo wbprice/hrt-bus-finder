@@ -106,9 +106,7 @@ $(function(){
 			$('#loading').remove();
 			this.collection.each(this.addStop, this);
 			this.$el.append("<button class='loadMore'>Refresh</button>");
-			this.$el.find('.loadMore').click(function(){
-				location.reload();
-			});
+			this.$el.find('.loadMore').click(this.model.updateArrivalList);
 		},
 		
 		addStop: function(stop) {
