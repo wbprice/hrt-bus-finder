@@ -205,7 +205,7 @@ h1, h2, h3, h4, h5, p, a {
 }
 
 #stops {
-    margin-bottom: 30px;
+    /*margin-bottom: 30px;*/
 }
 
 .stop-name {
@@ -657,10 +657,10 @@ if IE < 9 (please go upgrade)
 
 .loadMore {
 	height: 50px;
-	width: 50%;
+	width: 100%;
 	margin: 0 auto;
 	background: #DB5051;
-	border: 1px solid #dfdfdf;
+	border: 0px;
 	font-size: 1.5em;
 	font-family: Arvo;
 	font-style: italic;
