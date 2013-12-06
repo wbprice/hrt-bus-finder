@@ -76,6 +76,21 @@ $(function(){
 		    }
 		}
 	});
+
+	var feedback = Backbone.Model.extend({
+		defaults: {
+			name: '',
+			emailAddress: '',
+			message: ''
+		}
+
+		validate: function(attribs) {
+			if(attribs.message === undefined) {
+				return "A message was not included."
+			}
+		}
+	});
+
 	
 	var BusList = Backbone.Collection.extend({
 	    initialize: function(models, options) {
