@@ -720,6 +720,15 @@ $(function(){
 		    App.Router.navigate('findStops/' + location.lat() + '/' + location.lng() + '/');
 		}
 	});
+
+	var feedbackView = Backbone.View.extend({
+		id: feedbackView,
+		template: _.template($('#user-feedback-template').html()),
+
+
+
+
+	})
 	
 	var ContentView = Backbone.View.extend({
 		el: $(".app-container"),
