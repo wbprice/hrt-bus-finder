@@ -721,11 +721,11 @@ $(function(){
 		}
 	});
 
-	var feedbackView = Backbone.View.extend({
+	var FeedbackView = Backbone.View.extend({
 		id: feedbackView,
+		tagName: 'div',
 		template: _.template($('#user-feedback-template').html()),
-
-
+		render: function() {},
 
 
 	})
@@ -753,7 +753,8 @@ $(function(){
 			"": "homeView",
 			"stops/*stopIds": "stopView",
 			"routes(/*routeIds)": "routeView",
-			"findStops(/:lat/:lng)(/)": "findStopsView"
+			"findStops(/:lat/:lng)(/)": "findStopsView",
+			"feedback/" : "feedbackView"
 		 },
 		
 		homeView: function() {
@@ -779,6 +780,11 @@ $(function(){
 		    var location = lat && lng && new google.maps.LatLng(lat, lng);
 		    App.ContentView.setSubView(new FindStopsView({location: location}));
 		    App.MapView.setDraggable(true);
+		},
+
+		feedbackView: function() {
+			this.clearIntervals();
+			App.ContentView.setSubView(new FeedbackView);
 		},
 		
 		clearIntervals: function() {
