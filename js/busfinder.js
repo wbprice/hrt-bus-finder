@@ -82,11 +82,11 @@ $(function(){
 			name: '',
 			emailAddress: '',
 			message: ''
-		}
+		},
 
 		validate: function(attribs) {
 			if(attribs.message === undefined) {
-				return "A message was not included."
+				return "A message was not included.";
 			}
 		}
 	});
@@ -722,11 +722,12 @@ $(function(){
 	});
 
 	var FeedbackView = Backbone.View.extend({
-		id: feedbackView,
 		tagName: 'div',
 		template: _.template($('#user-feedback-template').html()),
-		render: function() {},
-
+		render: function() {
+		    this.$el.html(this.template());
+		    return this;
+		}
 
 	})
 	
@@ -754,7 +755,7 @@ $(function(){
 			"stops/*stopIds": "stopView",
 			"routes(/*routeIds)": "routeView",
 			"findStops(/:lat/:lng)(/)": "findStopsView",
-			"feedback/" : "feedbackView"
+			"feedback(/)" : "feedbackView"
 		 },
 		
 		homeView: function() {
@@ -785,6 +786,7 @@ $(function(){
 		feedbackView: function() {
 			this.clearIntervals();
 			App.ContentView.setSubView(new FeedbackView);
+			console.log("were you trying to go to feedback?");
 		},
 		
 		clearIntervals: function() {
