@@ -195,15 +195,15 @@
 	    <div id="feedback">
 	    	<h1>Feedback</h1>
 	    	<p>Having troubles? Have a feature idea? Just want to say thanks to the volunteers in Hampton Roads who built/support this site?</p>
-	    	<form action="#">
+	    	<form action="mailto:c4hrva-team@codeforamerica.org" method="post" enctype="text/plain">
 	    		
-	    		<input placeholder="Name" type="text">
+	    		<input placeholder="Name" name="Name" type="text">
 	    		<label for="name">Name</label>
-				<input placeholder="email address" type="text">
+				<input placeholder="email address" name="Email Address" type="text">
 				<label for="Email address">Email</label>
 				<textarea name="" placeholder="Your feedback here..." id="" cols="30" rows="5"></textarea>
 				<label for="feedback">Feedback</label>
-				<button class="btn" >Submit</button>
+				<input type="submit" name="submit" class="btn" value="Submit" >
 	    	</form>	
 	    </div>
 	</script>
