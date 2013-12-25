@@ -77,17 +77,22 @@ input {
 	border-right: none !important;
 }
 
-button.btn-info {
+.btn, .btn-info {
 	background-image: none;
 	background-color: #A7BFCC;
 	border: 2px solid white;
-	position: absolute;
-	right: 5px;
 	z-index: 3;
 	height: 36px;
+	color: white;
+	text-shadow: none;
 }
 
-button.btn-info:focus {
+.btn-info {
+	position: absolute;
+	right: 5px;
+}
+
+.btn:focus, .btn-info:focus {
 	background-color: #82A6BA;
 }
 
@@ -95,7 +100,7 @@ i.icon-search {
 	color: white !important;
 }
 
-.btn-info:hover {
+.btn:hover, .btn-info:hover {
 	background-color:#82A6BA;	
 }
 
@@ -344,9 +349,9 @@ h1 {
 
 #feedback form label {
 	text-align: left;
-	font-size: 12px;
-	line-height: 12px;
-	font-weight: 700;
+	font-size: 14px;
+	line-height: 16px;
+	font-weight: 400;
 
 }
 
