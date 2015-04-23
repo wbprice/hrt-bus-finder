@@ -1,26 +1,26 @@
 var Backbone = require('backbone'),
-		_ = require('underscore'),
-		$ = require('jquery'),
-		StopListTemplate = require('./templates/StopList.tpl.html'),
-		StopList = require('./../collections/StopList'),
-		StopListView = require('./../views/StopListView'),
-		LocateUser = require('./../utilities/LocateUser');
+	_ = require('underscore'),
+	$ = require('jquery'),
+	StopListTemplate = require('./templates/StopList.tpl.html'),
+	StopList = require('./../collections/StopList'),
+	StopListView = require('./../views/StopListView'),
+	LocateUser = require('./../utilities/LocateUser');
 
 module.exports = Backbone.View.extend({
   template: StopListTemplate,
 
   events: {
     'click .loadMore': 'forceRefresh'
-	},
+  },
 
 	initialize: function() {
-	    _.bindAll(this, 'forceRefresh', 'getStopList', 'render');
-	    LocateUser(this.getStopList);
-	},
+  	_.bindAll(this, 'forceRefresh', 'getStopList', 'render');
+  	LocateUser(this.getStopList);
+  },
 
 	forceRefresh: function() {
-	    App.ContentView.trigger('forceRefresh');
-	    $('html,body').animate({scrollTop: this.$el.offset().top - 60 }, 'slow');
+		App.ContentView.trigger('forceRefresh');
+	  $('html,body').animate({scrollTop: this.$el.offset().top - 60 }, 'slow');
 	},
 
 	getStopList: function(location) {
