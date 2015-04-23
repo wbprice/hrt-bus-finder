@@ -2,9 +2,9 @@
 
 /*global google */
 
-var Backbone = require('backbone'),
-		_ = require('underscore'),
-		$ = require('jquery');
+var Backbone = require('backbone');
+var _ = require('underscore');
+var $ = require('jquery');
 
 module.exports = Backbone.View.extend({
 
@@ -41,7 +41,11 @@ module.exports = Backbone.View.extend({
   },
 
   cancelCenterChanged: function() {
-    this.centerChangedTimeout && clearTimeout(this.centerChangedTimeout);
+
+    if (this.centerChangedTimeout !== undefined) {
+      clearTimeout(this.centerChangedTimeout);
+    }
+
   },
 
   centerChanged: function() {
@@ -91,67 +95,85 @@ module.exports = Backbone.View.extend({
     this.markers.push(stopMarker);
   },
 
-		createBusMarker: function(bus) {
-				var location = bus.get('busPosition') || bus.get('location');
-				var direction = bus.get('direction_id') || bus.get('direction');
-				if(location) {
-				var position = new google.maps.LatLng(location[1], location[0]);
-				var directionStr = direction ? 'inbound' : 'outbound';
-				var icon = './img/bus-' + directionStr + '.png';
-				var busMarker = new google.maps.Marker({
-					position: position,
-					icon: icon
-				});
+  createBusMarker: function(bus) {
 
-				if(bus.get('busId') in this.oldBusMarkers){
-						this.moveMarker(this.oldBusMarkers[bus.get('busId')], busMarker);
-				} else {
-						busMarker.setMap(this.map);
-				}
+    var location = bus.get('busPosition') || bus.get('location');
+    var direction = bus.get('direction_id') || bus.get('direction');
 
-				if(bus.has('location')) {
-						var infoWindow = new google.maps.InfoWindow({
-							content: this.getInfoWindowMsg(bus)
-						});
-						this.setupInfoWindow(busMarker, infoWindow);
-				}
+    if (location) {
 
-				this.busMarkers[bus.get('busId')] = busMarker;
-		}
-		},
+      var position = new google.maps.LatLng(location[1], location[0]);
+      var directionStr = direction ? 'inbound' : 'outbound';
+      var icon = './img/bus-' + directionStr + '.png';
+      var busMarker = new google.maps.Marker({
+        position: position,
+        icon: icon
+      });
 
-		setupInfoWindow: function(marker, info) {
-				var map = this.map;
-				google.maps.event.addListener(marker, 'click', function() {
-					info.open(map, marker);
-			});
-		},
+      if (bus.get('busId') in this.oldBusMarkers) {
+        this.moveMarker(this.oldBusMarkers[bus.get('busId')], busMarker);
+      } else {
+        busMarker.setMap(this.map);
+      }
 
-		getInfoWindowMsg: function(bus) {
-		var msg = '';
-		msg += 'Bus #' + bus.get('busId') + ' traveling ';
-		msg += bus.get('direction') == 0 ? 'outbound' : 'inbound';
-		msg += '<br>on route ' + bus.get('routeId');
+      if (bus.has('location')) {
+        var infoWindow = new google.maps.InfoWindow({
+          content: this.getInfoWindowMsg(bus)
+        });
+        this.setupInfoWindow(busMarker, infoWindow);
+      }
 
-		var adherence = bus.get('adherence');
-		if (adherence != null) msg += '<br>is ';
-		if (adherence == null) msg += '<br>has no adherence'
-		else if (adherence == 0) msg += 'on time';
-		else if (adherence == 1) msg += '1 minute early';
-		else if (adherence > 0) msg += adherence + ' minutes early';
-		else if (adherence == -1) msg += '1 minute late';
-		else msg += (adherence * -1) + ' minutes late';
+      this.busMarkers[bus.get('busId')] = busMarker;
+    }
+  },
 
-		var date = new Date(Date.parseUtc(bus.get('time')));
-		var timePassed = new Date(new Date().getTime() - date).getTime() / 1000 / 60 | 0;
+  setupInfoWindow: function(marker, info) {
+    var map = this.map;
+    google.maps.event.addListener(marker, 'click', function() {
+      info.open(map, marker);
+    });
+  },
 
-		msg += '<br>as of ';
-		if (timePassed == 0) msg += 'just now.';
-		else if (timePassed == 1) msg += '1 minute ago.';
-		else msg += timePassed + ' minutes ago.';
+  getInfoWindowMsg: function(bus) {
 
-		return msg;
-		},
+    var date = new Date(Date.parseUtc(bus.get('time')));
+    var timePassed = new Date(new Date().getTime() - date).getTime() / 1000 / 60 || 0;
+    var msg = '';
+    msg += 'Bus #' + bus.get('busId') + ' traveling ';
+    msg += bus.get('direction') === 0 ? 'outbound' : 'inbound';
+    msg += '<br>on route ' + bus.get('routeId');
+
+    var adherence = bus.get('adherence');
+
+    if (adherence !== null) {
+      msg += '<br>is ';
+    } else if (adherence === null) {
+      msg += '<br>has no adherence';
+    } else if (adherence === 0) {
+      msg += 'on time';
+    } else if (adherence === 1) {
+      msg += '1 minute early';
+    } else if (adherence > 0) {
+      msg += adherence + ' minutes early';
+    } else if (adherence === -1) {
+      msg += '1 minute late';
+    } else {
+      msg += (adherence * -1) + ' minutes late';
+    }
+
+    msg += '<br>as of ';
+
+    if (timePassed === 0) {
+      msg += 'just now.';
+    } else if (timePassed === 1) {
+      msg += '1 minute ago.';
+    } else {
+      msg += timePassed + ' minutes ago.';
+    }
+
+    return msg;
+
+  },
 
 		moveMarker: function(oldMarker, newMarker) {
 				var frames = 50;
