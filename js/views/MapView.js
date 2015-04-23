@@ -175,68 +175,78 @@ module.exports = Backbone.View.extend({
 
   },
 
-		moveMarker: function(oldMarker, newMarker) {
-				var frames = 50;
-				var start = oldMarker.getPosition();
-				var destination = newMarker.getPosition();
+  moveMarker: function(oldMarker, newMarker) {
+    var frames = 50;
+    var move;
+    var start = oldMarker.getPosition();
+    var destination = newMarker.getPosition();
 
-				if(start.lat() == destination.lat() && start.lng() == destination.lng()) {
-						newMarker.setMap(this.map);
-						return;
-				}
+    if (start.lat() === destination.lat() && start.lng() === destination.lng()) {
+      newMarker.setMap(this.map);
+    }
 
-				var latStep = (destination.lat() - start.lat()) / frames;
-				var lngStep = (destination.lng() - start.lng()) / frames;
+    var latStep = (destination.lat() - start.lat()) / frames;
+    var lngStep = (destination.lng() - start.lng()) / frames;
 
-				newMarker.setPosition(start);
-				newMarker.setMap(this.map);
+    newMarker.setPosition(start);
+    newMarker.setMap(this.map);
 
-				move = function(frame, marker, latS, lngS, dest) {
-						var curPos = marker.getPosition();
-						var newPos = new google.maps.LatLng(curPos.lat() + latS, curPos.lng() + lngS);
-						marker.setPosition(newPos);
-						if(frame < frames) {
-								setTimeout(function(){move(frame + 1, marker, latS, lngS, dest);}, 100);
-						} else {
-								marker.setPosition(dest);
-						}
-				}
+    move = function(frame, marker, latS, lngS, dest) {
+      var curPos = marker.getPosition();
+      var newPos = new google.maps.LatLng(curPos.lat() + latS, curPos.lng() + lngS);
+      marker.setPosition(newPos);
+      if (frame < frames) {
 
-				move(1, newMarker, latStep, lngStep, destination);
-		},
+        setTimeout(function() {
+          move(frame + 1, marker, latS, lngS, dest);
+        }, 100);
 
-		setBounds: function() {
-				var bounds = new google.maps.LatLngBounds();
-		for(var i=0; i<this.markers.length; i++) {
-				bounds.extend(this.markers[i].getPosition());
-		}
-		$.each(this.busMarkers, function(key, value) {
-							bounds.extend(value.getPosition());
-					});
-		this.map.fitBounds(bounds);
-		},
+      } else {
 
-		center: function(location) {
-				if(location) {
-						this.map.setCenter(location);
-					} else {
-							return this.map.getCenter();
-					}
-		},
+        marker.setPosition(dest);
 
-		resize: function() {
-		google.maps.event.trigger(this.map, 'resize');
-		},
+      }
+    };
 
-		zoom: function(zoom) {
-				this.map.setZoom(zoom);
-		},
+    move(1, newMarker, latStep, lngStep, destination);
+  },
 
-		setDraggable: function(flag) {
-				this.map.setOptions({
-						draggable: flag,
-						scrollwheel: flag,
-						disableDoubleClickZoom: !flag});
-		}
+  setBounds: function() {
+    var bounds = new google.maps.LatLngBounds();
+
+    for (var i = 0; i < this.markers.length; i++) {
+      bounds.extend(this.markers[i].getPosition());
+    }
+
+    $.each(this.busMarkers, function(key, value) {
+      bounds.extend(value.getPosition());
+    });
+
+    this.map.fitBounds(bounds);
+  },
+
+  center: function(location) {
+    if (location) {
+      this.map.setCenter(location);
+    } else {
+      return this.map.getCenter();
+    }
+  },
+
+  resize: function() {
+    google.maps.event.trigger(this.map, 'resize');
+  },
+
+  zoom: function(zoom) {
+    this.map.setZoom(zoom);
+  },
+
+  setDraggable: function(flag) {
+    this.map.setOptions({
+      draggable: flag,
+      scrollwheel: flag,
+      disableDoubleClickZoom: !flag
+    });
+  }
 
 });
