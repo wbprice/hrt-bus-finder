@@ -65,11 +65,13 @@ module.exports = Backbone.View.extend({
   },
 
   createUserMarker: function(location, animate) {
+
     var userMarker = new google.maps.Marker({
       position: location,
       animation: animate && google.maps.Animation.DROP,
       map: this.map
     });
+
     this.markers.push(userMarker);
   },
 
@@ -82,41 +84,39 @@ module.exports = Backbone.View.extend({
       icon: './img/busstop.png'
     });
 
-    if (onClick !== null) {
+    if (onClick !== undefined) {
       google.maps.event.addListener(stopMarker, 'click', onClick);
     }
 
     this.markers.push(stopMarker);
   },
 
-  createBusMarker: function(bus) {
-    var location = bus.get('busPosition') || bus.get('location');
-    var direction = bus.get('direction_id') || bus.get('direction');
+		createBusMarker: function(bus) {
+				var location = bus.get('busPosition') || bus.get('location');
+				var direction = bus.get('direction_id') || bus.get('direction');
+				if(location) {
+				var position = new google.maps.LatLng(location[1], location[0]);
+				var directionStr = direction ? 'inbound' : 'outbound';
+				var icon = './img/bus-' + directionStr + '.png';
+				var busMarker = new google.maps.Marker({
+					position: position,
+					icon: icon
+				});
 
-    if (location) {
-      var position = new google.maps.LatLng(location[1], location[0]);
-      var directionStr = direction ? 'inbound' : 'outbound';
-      var icon = './img/bus-' + directionStr + '.png';
-      var busMarker = new google.maps.Marker({
-        position: position,
-        icon: icon
-      });
+				if(bus.get('busId') in this.oldBusMarkers){
+						this.moveMarker(this.oldBusMarkers[bus.get('busId')], busMarker);
+				} else {
+						busMarker.setMap(this.map);
+				}
 
-      if (bus.get('busId') in this.oldBusMarkers) {
-        this.moveMarker(this.oldBusMarkers[bus.get('busId')], busMarker);
-      } else {
-        busMarker.setMap(this.map);
-      }
+				if(bus.has('location')) {
+						var infoWindow = new google.maps.InfoWindow({
+							content: this.getInfoWindowMsg(bus)
+						});
+						this.setupInfoWindow(busMarker, infoWindow);
+				}
 
-      if (bus.has('location')) {
-        var infoWindow = new google.maps.InfoWindow({
-          content: this.getInfoWindowMsg(bus)
-        });
-        this.setupInfoWindow(busMarker, infoWindow);
-      }
-
-      this.busMarkers[bus.get('busId')] = busMarker;
-
+				this.busMarkers[bus.get('busId')] = busMarker;
 		}
 		},
 
